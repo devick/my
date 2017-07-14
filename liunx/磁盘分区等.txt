@@ -1,0 +1,7 @@
+df -h
+
+//命令查看磁盘状态
+fdisk -l
+
+//给/dev/sdb进行分区操作，需要输入对应命令
+fdisk /dev/sdb 
