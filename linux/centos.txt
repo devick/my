@@ -1,0 +1,35 @@
+启动docker
+service docker start
+
+设置开机自启
+systemctl enable docker.service  
+
+
+启动nginx服务
+systemctl start nginx.service
+
+设置开机自启动
+systemctl enable nginx.service
+
+停止开机自启动
+systemctl disable nginx.service
+
+查看服务当前状态
+systemctl status nginx.service
+
+重新启动服务
+systemctl restart nginx.service
+
+查看所有已启动的服务
+systemctl list-units --type=service
+
+
+
+查看服务自启列表
+chkconfig --list
+
+把docker加入到服务自启列表
+chkconfig –-add docker
+
+chkconfig docker on
+chkconfig docker off
