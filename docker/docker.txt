@@ -1,0 +1,39 @@
+
+docker run -it --name mytest centos:7 /bin/bash
+
+查看docker容器的IP
+docker inspect mytest -f "{{.NetworkSettings.IPAddress}}"
+
+查看容器的信息
+docker inspect mytest
+
+重新启动已经停止的容器
+docker start -i mytest
+
+查看容器里的日志
+docker logs -tf mytest
+
+查看容器里的进程
+docker top mytest
+
+停止容器
+docker stop mytest
+docker kill mytest
+
+在容器中运行命令
+docker exec -it mytest /bin/bash
+
+
+挂载数据卷（主机），宿主机目录/mydata/dockerVolumes/myVolumes docker容器里的目录/mydata
+docker run -it --name myVolumes -v /mydata/dockerVolumes/myVolumes:/mydata alpine
+
+挂载数据卷容器，myVolumes为之前启动的数据卷容器，只需要运行一次
+docker run -it --name mytest --volumes-from myVolumes centos:7 /bin/bash
+
+备份数据卷容器 myVolumes：数据卷容器 /mydata/bak：宿主机备份目录，备份的tar文件放这 /bak：容器里存放备份文件的目录 /bak/mydata.tar：备份文件压缩包 /mydata：要备份的目录
+docker run --volumes-from myVolumes -v /mydata/bak:/bak --name volumesbackup ubuntu tar -cvf /bak/mydata.tar /mydata
+docker run --volumes-from myVolumes -v /mydata/bak:/bak --name volumesbackup ubuntu tar -cvf /bak/mydata.tar /mydata && docker rm volumesbackup
+
+还原数据卷容器
+docker run --volumes-from myVolumes -v /mydata/bak:/bak --name volumesbackup ubuntu tar -xvf /bak/mydata.tar -C /
+docker run --volumes-from myVolumes -v /mydata/bak:/bak --name volumesbackup ubuntu tar -xvf /bak/mydata.tar -C / && docker rm volumesbackup

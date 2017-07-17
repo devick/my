@@ -1,0 +1,3 @@
+sudo ros install -d /dev/sda -c cloud-config.yml --append "rancher.password=eisunion"
+
+/dev/vxda

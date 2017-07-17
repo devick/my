@@ -1,0 +1,25 @@
+version: '2'
+services:
+  database:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: eisunion
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  wordpresslb:
+    image: rancher/lb-service-haproxy:v0.7.5
+    ports:
+    - 80:80/tcp
+    labels:
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.container.create_agent: 'true'
+  mywordpress:
+    image: wordpress
+    stdin_open: true
+    tty: true
+    links:
+    - database:mysql
+    labels:
+      io.rancher.container.pull_image: always
